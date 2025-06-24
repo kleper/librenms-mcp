@@ -29,7 +29,12 @@ class LibreNMSClient:
         return response.json()
 
     # Devices
-    def get_devices(self, **params: Any) -> Dict[str, Any]:
+    def get_devices(self, *, limit: int | None = None, offset: int | None = None,
+                    **params: Any) -> Dict[str, Any]:
+        if limit is not None:
+            params['limit'] = limit
+        if offset is not None:
+            params['offset'] = offset
         return self.request('GET', '/api/v0/devices', params=params)
 
     def add_device(self, data: Dict[str, Any]) -> Dict[str, Any]:
@@ -54,14 +59,25 @@ class LibreNMSClient:
         return self.request('GET', f'/api/v0/devices/{hostname}/availability')
 
     # Ports
-    def get_ports(self, **params: Any) -> Dict[str, Any]:
+    def get_ports(self, *, limit: int | None = None, offset: int | None = None,
+                  **params: Any) -> Dict[str, Any]:
+        if limit is not None:
+            params['limit'] = limit
+        if offset is not None:
+            params['offset'] = offset
         return self.request('GET', '/api/v0/ports', params=params)
 
-    def search_ports(self, search: str, field: Optional[str] = None, **params: Any) -> Dict[str, Any]:
+    def search_ports(self, search: str, field: Optional[str] = None,
+                     *, limit: int | None = None, offset: int | None = None,
+                     **params: Any) -> Dict[str, Any]:
         if field:
             path = f'/api/v0/ports/search/{field}/{search}'
         else:
             path = f'/api/v0/ports/search/{search}'
+        if limit is not None:
+            params['limit'] = limit
+        if offset is not None:
+            params['offset'] = offset
         return self.request('GET', path, params=params)
 
     def get_port_by_mac(self, mac: str, **params: Any) -> Dict[str, Any]:
@@ -83,7 +99,12 @@ class LibreNMSClient:
         return self.request('PATCH', f'/api/v0/ports/{port_id}/description', json=data)
 
     # Bills
-    def get_bills(self, **params: Any) -> Dict[str, Any]:
+    def get_bills(self, *, limit: int | None = None, offset: int | None = None,
+                  **params: Any) -> Dict[str, Any]:
+        if limit is not None:
+            params['limit'] = limit
+        if offset is not None:
+            params['offset'] = offset
         return self.request('GET', '/api/v0/bills', params=params)
 
     def get_bill(self, bill_id: int) -> Dict[str, Any]:
