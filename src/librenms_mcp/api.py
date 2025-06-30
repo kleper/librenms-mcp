@@ -4,7 +4,6 @@ import logging
 from typing import Any
 
 from fastapi import FastAPI, HTTPException, Query
-from fastapi.responses import FileResponse
 
 from .client import LibreNMSClient
 
